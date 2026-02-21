@@ -114,6 +114,7 @@ results = backtester.walk_forward_validation(X, y)
 ## Configuration
 
 Edit `configs/config.yaml` to customize:
+
 - Data sources and date ranges
 - Feature engineering parameters
 - Model hyperparameters

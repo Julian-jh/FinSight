@@ -9,7 +9,7 @@ features:
     ema_spans: [12, 26]
     rsi_period: 14
     volatility_window: 20
-  
+
   lagged_features:
     lags: [1, 5, 10, 21]
     rolling_windows: [5, 10, 20]

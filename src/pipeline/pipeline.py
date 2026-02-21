@@ -29,8 +29,18 @@ class FinSightPipeline:
         # Step 1: Data Ingestion
         logger.info("\n[1/5] Data Ingestion")
         fetcher = DataFetcher(data_dir=self.config.get('data_dir', 'data'))
-        self.data = fetcher.fetch_stock_data(ticker, start_date, end_date)
-        fetcher.save_raw_data(self.data, f"{ticker}_raw.csv")
+        
+        # Try to load existing data first, then fetch if not available
+        try:
+            self.data = fetcher.load_raw_data(f"{ticker}_raw.csv")
+            logger.info(f"Loaded existing data from {ticker}_raw.csv")
+        except FileNotFoundError:
+            self.data = fetcher.fetch_stock_data(ticker, start_date, end_date)
+            if not self.data.empty:
+                fetcher.save_raw_data(self.data, f"{ticker}_raw.csv")
+            else:
+                logger.error("No data available. Please generate test data first.")
+                raise ValueError("No data available")
         
         # Step 2: Data Validation
         logger.info("\n[2/5] Data Validation")
