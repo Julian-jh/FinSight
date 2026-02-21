@@ -1,0 +1,30 @@
+data:
+  ticker: "SPY"
+  start_date: "2020-01-01"
+  interval: "1d"
+
+features:
+  technical_indicators:
+    sma_windows: [20, 50, 200]
+    ema_spans: [12, 26]
+    rsi_period: 14
+    volatility_window: 20
+  
+  lagged_features:
+    lags: [1, 5, 10, 21]
+    rolling_windows: [5, 10, 20]
+
+model:
+  type: "random_forest"
+  n_estimators: 100
+  max_depth: 10
+  random_state: 42
+  test_size: 0.2
+
+backtesting:
+  initial_window: 252
+  step_size: 21
+
+api:
+  host: "0.0.0.0"
+  port: 8000
