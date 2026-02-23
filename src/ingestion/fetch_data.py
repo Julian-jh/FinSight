@@ -78,12 +78,11 @@ if __name__ == "__main__":
     
     tickers = ["TSLA", "GOOG", "spy", "AAPL", "MSFT"]
     
-    data = fetcher.fetch_stock_data(
-        ticker="SPY",
+    results = fetcher.fetch_multiple_tickers(
+        tickers=tickers,
         start_date="2020-01-01",
         end_date="2024-12-31"
     )
     
-    fetcher.save_raw_data(data, "SPY_raw.csv")
-    logger.info(f"Sample data shape: {data.shape}")
-    logger.info(f"Columns: {data.columns.tolist()}")
+    for ticker, df in results.items():
+        print(f"{ticker}: {df.shape}")
